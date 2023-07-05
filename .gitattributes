@@ -1,0 +1,16 @@
+# Git
+.gitattributes text eol=lf export-ignore
+.gitignore text eol=lf export-ignore
+
+# Markdown
+*.md text eol=lf
+
+# JSON
+*.json text eol=lf
+*.lock text eol=lf
+
+# PHP
+*.php text eol=lf
+
+# XML
+*.xml text eol=lf

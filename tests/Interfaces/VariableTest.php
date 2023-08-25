@@ -72,7 +72,7 @@ interface VariableTest
     /**
      * @return array
      */
-    public function provideGetTypeIntegerReturnCustom(); // IMPROVE: Rename this method.
+    public function provideGetTypeIntegerReturnCustom();
 
     /**
      * @return array
@@ -132,7 +132,7 @@ interface VariableTest
     /**
      * @return void
      */
-    public function testExtensionVariable();
+    public function testImplementations();
 
     /**
      * @dataProvider provideConstruct

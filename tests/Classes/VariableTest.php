@@ -395,7 +395,7 @@ class VariableTest extends TestCase implements VariableTestInterface
     /**
      * @return void
      */
-    public function testExtensionVariable()
+    public function testImplementations()
     {
         $this->assertInstanceOf(VariableInterface::class, new Variable());
     }

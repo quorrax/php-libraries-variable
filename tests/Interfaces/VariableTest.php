@@ -130,6 +130,61 @@ interface VariableTest
     public function provideGetValue();
 
     /**
+     * @return array
+     */
+    public function provideIsBooleanDefaultReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanDefaultReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanDefaultReturnCustomExceptionUnexpectedValue();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalse();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalseReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalseReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalseReturnCustomExceptionUnexpectedValue();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrue();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrueReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrueReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrueReturnCustomExceptionUnexpectedValue();
+
+    /**
      * @return void
      */
     public function testImplementations();
@@ -388,4 +443,114 @@ interface VariableTest
      * @return void
      */
     public function testMethodGetValueDefault();
+
+    /**
+     * @return void
+     */
+    public function testMethodIsBooleanDefault();
+
+    /**
+     * @dataProvider provideIsBooleanDefaultReturnCustom
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanDefaultReturnCustom($return);
+
+    /**
+     * @dataProvider provideIsBooleanDefaultReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanDefaultReturnCustomExceptionInvalidArgument($return);
+
+    /**
+     * @dataProvider provideIsBooleanDefaultReturnCustomExceptionUnexpectedValue
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanDefaultReturnCustomExceptionUnexpectedValue($return);
+
+    /**
+     * @dataProvider provideIsBooleanFalse
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalse($value);
+
+    /**
+     * @dataProvider provideIsBooleanFalseReturnCustom
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalseReturnCustom($value, $return);
+
+    /**
+     * @dataProvider provideIsBooleanFalseReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalseReturnCustomExceptionInvalidArgument($value, $return);
+
+    /**
+     * @dataProvider provideIsBooleanFalseReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalseReturnCustomExceptionUnexpectedValue($value, $return);
+
+    /**
+     * @dataProvider provideIsBooleanTrue
+     *
+     * @param bool $value
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrue($value);
+
+    /**
+     * @dataProvider provideIsBooleanTrueReturnCustom
+     *
+     * @param bool $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrueReturnCustom($value, $return);
+
+    /**
+     * @dataProvider provideIsBooleanTrueReturnCustomExceptionInvalidArgument
+     *
+     * @param bool $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrueReturnCustomExceptionInvalidArgument($value, $return);
+
+    /**
+     * @dataProvider provideIsBooleanTrueReturnCustomExceptionUnexpectedValue
+     *
+     * @param bool $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrueReturnCustomExceptionUnexpectedValue($value, $return);
 }

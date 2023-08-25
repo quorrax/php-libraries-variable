@@ -17,6 +17,13 @@ interface Variable
     public function getValue();
 
     /**
+     * @param string $return
+     *
+     * @return \Quorrax\Interfaces\Variable
+     */
+    public function isBoolean($return = Variable::class);
+
+    /**
      * @param mixed $value
      */
     public function __construct($value = null);

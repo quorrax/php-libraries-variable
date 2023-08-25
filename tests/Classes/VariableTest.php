@@ -80,6 +80,43 @@ class VariableTest extends TestCase implements VariableTestInterface
     /**
      * @return array
      */
+    private function getValuesReturn()
+    {
+        return [
+            [
+                Variable::class,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesReturnInvalidMixed()
+    {
+        return array_merge(
+            $this->getValuesBoolean(),
+            $this->getValuesFloat(),
+            $this->getValuesInteger(),
+            $this->getValuesNull()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesReturnInvalidString()
+    {
+        return [
+            [
+                stdClass::class,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
     private function getValuesString()
     {
         return [
@@ -152,11 +189,7 @@ class VariableTest extends TestCase implements VariableTestInterface
      */
     public function provideGetTypeDefaultReturnCustom()
     {
-        return [
-            [
-                Variable::class,
-            ],
-        ];
+        return $this->getValuesReturn();
     }
 
     /**
@@ -164,12 +197,7 @@ class VariableTest extends TestCase implements VariableTestInterface
      */
     public function provideGetTypeDefaultReturnCustomExceptionInvalidArgument()
     {
-        return array_merge(
-            $this->getValuesBoolean(),
-            $this->getValuesFloat(),
-            $this->getValuesInteger(),
-            $this->getValuesNull()
-        );
+        return $this->getValuesReturnInvalidMixed();
     }
 
     /**
@@ -177,11 +205,7 @@ class VariableTest extends TestCase implements VariableTestInterface
      */
     public function provideGetTypeDefaultReturnCustomExceptionUnexpectedValue()
     {
-        return [
-            [
-                stdClass::class,
-            ],
-        ];
+        return $this->getValuesReturnInvalidString();
     }
 
     /**
@@ -390,6 +414,135 @@ class VariableTest extends TestCase implements VariableTestInterface
     public function provideGetValue()
     {
         return $this->getValues();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanDefaultReturnCustom()
+    {
+        return $this->getValuesReturn();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanDefaultReturnCustomExceptionInvalidArgument()
+    {
+        return $this->getValuesReturnInvalidMixed();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanDefaultReturnCustomExceptionUnexpectedValue()
+    {
+        return $this->getValuesReturnInvalidString();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalse()
+    {
+        return array_merge(
+            $this->getValuesFloat(),
+            $this->getValuesInteger(),
+            $this->getValuesNull(),
+            $this->getValuesString()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalseReturnCustom()
+    {
+        $values = [];
+        foreach ($this->provideIsBooleanDefaultReturnCustom() as $return) {
+            foreach ($this->provideIsBooleanFalse() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalseReturnCustomExceptionInvalidArgument()
+    {
+        $values = [];
+        foreach ($this->provideIsBooleanDefaultReturnCustomExceptionInvalidArgument() as $return) {
+            foreach ($this->provideIsBooleanFalse() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanFalseReturnCustomExceptionUnexpectedValue()
+    {
+        $values = [];
+        foreach ($this->provideIsBooleanDefaultReturnCustomExceptionUnexpectedValue() as $return) {
+            foreach ($this->provideIsBooleanFalse() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrue()
+    {
+        return $this->getValuesBoolean();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrueReturnCustom()
+    {
+        $values = [];
+        foreach ($this->provideIsBooleanDefaultReturnCustom() as $return) {
+            foreach ($this->provideIsBooleanTrue() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrueReturnCustomExceptionInvalidArgument()
+    {
+        $values = [];
+        foreach ($this->provideIsBooleanDefaultReturnCustomExceptionInvalidArgument() as $return) {
+            foreach ($this->provideIsBooleanTrue() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsBooleanTrueReturnCustomExceptionUnexpectedValue()
+    {
+        $values = [];
+        foreach ($this->provideIsBooleanDefaultReturnCustomExceptionUnexpectedValue() as $return) {
+            foreach ($this->provideIsBooleanTrue() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
     }
 
     /**
@@ -835,5 +988,199 @@ class VariableTest extends TestCase implements VariableTestInterface
     {
         $variable = new Variable();
         $this->assertSame(null, $variable->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMethodIsBooleanDefault()
+    {
+        $variable = new Variable();
+        $isBoolean = $variable->isBoolean();
+        $this->assertInstanceOf(VariableInterface::class, $isBoolean);
+        $this->assertInstanceOf(Variable::class, $isBoolean);
+        $this->assertSame(false, $isBoolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsBooleanDefaultReturnCustom
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanDefaultReturnCustom($return)
+    {
+        $variable = new Variable();
+        $isBoolean = $variable->isBoolean($return);
+        $this->assertInstanceOf(VariableInterface::class, $isBoolean);
+        $this->assertInstanceOf($return, $isBoolean);
+        $this->assertSame(false, $isBoolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsBooleanDefaultReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanDefaultReturnCustomExceptionInvalidArgument($return)
+    {
+        $variable = new Variable();
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideIsBooleanDefaultReturnCustomExceptionUnexpectedValue
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanDefaultReturnCustomExceptionUnexpectedValue($return)
+    {
+        $variable = new Variable();
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideIsBooleanFalse
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalse($value)
+    {
+        $variable = new Variable($value);
+        $isBoolean = $variable->isBoolean();
+        $this->assertInstanceOf(VariableInterface::class, $isBoolean);
+        $this->assertInstanceOf(Variable::class, $isBoolean);
+        $this->assertSame(false, $isBoolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsBooleanFalseReturnCustom
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalseReturnCustom($value, $return)
+    {
+        $variable = new Variable($value);
+        $isBoolean = $variable->isBoolean($return);
+        $this->assertInstanceOf(VariableInterface::class, $isBoolean);
+        $this->assertInstanceOf($return, $isBoolean);
+        $this->assertSame(false, $isBoolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsBooleanFalseReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalseReturnCustomExceptionInvalidArgument($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideIsBooleanFalseReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanFalseReturnCustomExceptionUnexpectedValue($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideIsBooleanTrue
+     *
+     * @param bool $value
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrue($value)
+    {
+        $variable = new Variable($value);
+        $isBoolean = $variable->isBoolean();
+        $this->assertInstanceOf(VariableInterface::class, $isBoolean);
+        $this->assertInstanceOf(Variable::class, $isBoolean);
+        $this->assertSame(true, $isBoolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsBooleanTrueReturnCustom
+     *
+     * @param bool $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrueReturnCustom($value, $return)
+    {
+        $variable = new Variable($value);
+        $isBoolean = $variable->isBoolean($return);
+        $this->assertInstanceOf(VariableInterface::class, $isBoolean);
+        $this->assertInstanceOf($return, $isBoolean);
+        $this->assertSame(true, $isBoolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsBooleanTrueReturnCustomExceptionInvalidArgument
+     *
+     * @param bool $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrueReturnCustomExceptionInvalidArgument($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideIsBooleanTrueReturnCustomExceptionUnexpectedValue
+     *
+     * @param bool $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsBooleanTrueReturnCustomExceptionUnexpectedValue($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isBoolean($return);
     }
 }

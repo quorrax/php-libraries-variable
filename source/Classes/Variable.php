@@ -14,6 +14,27 @@ class Variable implements VariableInterface
     private $value;
 
     /**
+     * @param string $function
+     * @param string $return
+     *
+     * @return \Quorrax\Interfaces\Variable
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
+     */
+    private function execute($function, $return)
+    {
+        if (is_string($return)) {
+            if (is_a($return, VariableInterface::class, true)) {
+                return new $return(call_user_func($function, $this->getValue()));
+            } else {
+                throw new UnexpectedValueException();
+            }
+        } else {
+            throw new InvalidArgumentException();
+        }
+    }
+
+    /**
      * @param mixed $value
      *
      * @return void
@@ -26,21 +47,13 @@ class Variable implements VariableInterface
     /**
      * @param string $return
      *
-     * @return \Quorrax\Classes\Variable
+     * @return \Quorrax\Interfaces\Variable
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
      */
     public function getType($return = Variable::class)
     {
-        if (is_string($return)) {
-            if (is_a($return, VariableInterface::class, true)) {
-                return new $return(gettype($this->getValue()));
-            } else {
-                throw new UnexpectedValueException();
-            }
-        } else {
-            throw new InvalidArgumentException();
-        }
+        return $this->execute("gettype", $return);
     }
 
     /**
@@ -49,6 +62,18 @@ class Variable implements VariableInterface
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @param string $return
+     *
+     * @return \Quorrax\Interfaces\Variable
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
+     */
+    public function isBoolean($return = Variable::class)
+    {
+        return $this->execute("is_bool", $return);
     }
 
     /**

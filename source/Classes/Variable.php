@@ -67,6 +67,16 @@ class Variable implements VariableInterface
      *
      * @return \Quorrax\Interfaces\Variable
      */
+    public function getValueAsBoolean($return = Variable::class)
+    {
+        return $this->execute("boolval", $return);
+    }
+
+    /**
+     * @param string $return
+     *
+     * @return \Quorrax\Interfaces\Variable
+     */
     public function getValueAsFloat($return = Variable::class)
     {
         return $this->execute("floatval", $return);

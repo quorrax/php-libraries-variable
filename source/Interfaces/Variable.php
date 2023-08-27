@@ -21,6 +21,13 @@ interface Variable
      *
      * @return \Quorrax\Interfaces\Variable
      */
+    public function getValueAsBoolean($return = Variable::class);
+
+    /**
+     * @param string $return
+     *
+     * @return \Quorrax\Interfaces\Variable
+     */
     public function getValueAsFloat($return = Variable::class);
 
     /**

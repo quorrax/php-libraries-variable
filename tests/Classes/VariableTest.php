@@ -419,6 +419,105 @@ class VariableTest extends TestCase implements VariableTestInterface
     /**
      * @return array
      */
+    public function provideGetValueAsBoolean()
+    {
+        return [
+            [
+                false,
+                false,
+            ],
+            [
+                true,
+                true,
+            ],
+            [
+                0.0,
+                false,
+            ],
+            [
+                0,
+                false,
+            ],
+            [
+                null,
+                false,
+            ],
+            [
+                "",
+                false,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsBooleanDefaultReturnCustom()
+    {
+        return $this->getValuesReturn();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsBooleanDefaultReturnCustomExceptionInvalidArgument()
+    {
+        return $this->getValuesReturnInvalidMixed();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsBooleanDefaultReturnCustomExceptionUnexpectedValue()
+    {
+        return $this->getValuesReturnInvalidString();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsBooleanReturnCustom()
+    {
+        $values = [];
+        foreach ($this->provideGetValueAsBooleanDefaultReturnCustom() as $return) {
+            foreach ($this->provideGetValueAsBoolean() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsBooleanReturnCustomExceptionInvalidArgument()
+    {
+        $values = [];
+        foreach ($this->provideGetValueAsBooleanDefaultReturnCustomExceptionInvalidArgument() as $return) {
+            foreach ($this->getValues() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsBooleanReturnCustomExceptionUnexpectedValue()
+    {
+        $values = [];
+        foreach ($this->provideGetValueAsBooleanDefaultReturnCustomExceptionUnexpectedValue() as $return) {
+            foreach ($this->getValues() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
     public function provideGetValueAsFloat()
     {
         return [
@@ -1078,6 +1177,135 @@ class VariableTest extends TestCase implements VariableTestInterface
     {
         $variable = new Variable($value);
         $this->assertSame($value, $variable->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsBoolean
+     *
+     * @param mixed $value
+     * @param bool $expected
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsBoolean($value, $expected)
+    {
+        $variable = new Variable($value);
+        $boolean = $variable->getValueAsBoolean();
+        $this->assertInstanceOf(VariableInterface::class, $boolean);
+        $this->assertInstanceOf(Variable::class, $boolean);
+        $this->assertSame($expected, $boolean->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMethodGetValueAsBooleanDefault()
+    {
+        $variable = new Variable();
+        $boolean = $variable->getValueAsBoolean();
+        $this->assertInstanceOf(VariableInterface::class, $boolean);
+        $this->assertInstanceOf(Variable::class, $boolean);
+        $this->assertSame(false, $boolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsBooleanDefaultReturnCustom
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsBooleanDefaultReturnCustom($return)
+    {
+        $variable = new Variable();
+        $boolean = $variable->getValueAsBoolean($return);
+        $this->assertInstanceOf(VariableInterface::class, $boolean);
+        $this->assertInstanceOf($return, $boolean);
+        $this->assertSame(false, $boolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsBooleanDefaultReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsBooleanDefaultReturnCustomExceptionInvalidArgument($return)
+    {
+        $variable = new Variable();
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideGetValueAsBooleanDefaultReturnCustomExceptionUnexpectedValue
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsBooleanDefaultReturnCustomExceptionUnexpectedValue($return)
+    {
+        $variable = new Variable();
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideGetValueAsBooleanReturnCustom
+     *
+     * @param mixed $value
+     * @param boolean $expected
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsBooleanReturnCustom($value, $expected, $return)
+    {
+        $variable = new Variable($value);
+        $boolean = $variable->getValueAsBoolean($return);
+        $this->assertInstanceOf(VariableInterface::class, $boolean);
+        $this->assertInstanceOf($return, $boolean);
+        $this->assertSame($expected, $boolean->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsBooleanReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsBooleanReturnCustomExceptionInvalidArgument($value, $return)
+    {
+        $variable = new Variable();
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsBoolean($return);
+    }
+
+    /**
+     * @dataProvider provideGetValueAsBooleanReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsBooleanReturnCustomExceptionUnexpectedValue($value, $return)
+    {
+        $variable = new Variable();
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsBoolean($return);
     }
 
     /**

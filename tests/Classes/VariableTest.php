@@ -419,6 +419,105 @@ class VariableTest extends TestCase implements VariableTestInterface
     /**
      * @return array
      */
+    public function provideGetValueAsFloat()
+    {
+        return [
+            [
+                false,
+                0.0,
+            ],
+            [
+                true,
+                1.0,
+            ],
+            [
+                0.0,
+                0.0,
+            ],
+            [
+                0,
+                0.0,
+            ],
+            [
+                null,
+                0.0,
+            ],
+            [
+                "",
+                0.0,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatDefaultReturnCustom()
+    {
+        return $this->getValuesReturn();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatDefaultReturnCustomExceptionInvalidArgument()
+    {
+        return $this->getValuesReturnInvalidMixed();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatDefaultReturnCustomExceptionUnexpectedValue()
+    {
+        return $this->getValuesReturnInvalidString();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatReturnCustom()
+    {
+        $values = [];
+        foreach ($this->provideGetValueAsFloatDefaultReturnCustom() as $return) {
+            foreach ($this->provideGetValueAsFloat() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatReturnCustomExceptionInvalidArgument()
+    {
+        $values = [];
+        foreach ($this->provideGetValueAsFloatDefaultReturnCustomExceptionInvalidArgument() as $return) {
+            foreach ($this->getValues() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatReturnCustomExceptionUnexpectedValue()
+    {
+        $values = [];
+        foreach ($this->provideGetValueAsFloatDefaultReturnCustomExceptionUnexpectedValue() as $return) {
+            foreach ($this->getValues() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
     public function provideIsBooleanDefaultReturnCustom()
     {
         return $this->getValuesReturn();
@@ -979,6 +1078,135 @@ class VariableTest extends TestCase implements VariableTestInterface
     {
         $variable = new Variable($value);
         $this->assertSame($value, $variable->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsFloat
+     *
+     * @param mixed $value
+     * @param float $expected
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloat($value, $expected)
+    {
+        $variable = new Variable($value);
+        $float = $variable->getValueAsFloat();
+        $this->assertInstanceOf(VariableInterface::class, $float);
+        $this->assertInstanceOf(Variable::class, $float);
+        $this->assertSame($expected, $float->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefault()
+    {
+        $variable = new Variable();
+        $float = $variable->getValueAsFloat();
+        $this->assertInstanceOf(VariableInterface::class, $float);
+        $this->assertInstanceOf(Variable::class, $float);
+        $this->assertSame(0.0, $float->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsFloatDefaultReturnCustom
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefaultReturnCustom($return)
+    {
+        $variable = new Variable();
+        $float = $variable->getValueAsFloat($return);
+        $this->assertInstanceOf(VariableInterface::class, $float);
+        $this->assertInstanceOf($return, $float);
+        $this->assertSame(0.0, $float->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsFloatDefaultReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefaultReturnCustomExceptionInvalidArgument($return)
+    {
+        $variable = new Variable();
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsFloat($return);
+    }
+
+    /**
+     * @dataProvider provideGetValueAsFloatDefaultReturnCustomExceptionUnexpectedValue
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefaultReturnCustomExceptionUnexpectedValue($return)
+    {
+        $variable = new Variable();
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsFloat($return);
+    }
+
+    /**
+     * @dataProvider provideGetValueAsFloatReturnCustom
+     *
+     * @param mixed $value
+     * @param float $expected
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatReturnCustom($value, $expected, $return)
+    {
+        $variable = new Variable($value);
+        $float = $variable->getValueAsFloat($return);
+        $this->assertInstanceOf(VariableInterface::class, $float);
+        $this->assertInstanceOf($return, $float);
+        $this->assertSame($expected, $float->getValue());
+    }
+
+    /**
+     * @dataProvider provideGetValueAsFloatReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatReturnCustomExceptionInvalidArgument($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsFloat($return);
+    }
+
+    /**
+     * @dataProvider provideGetValueAsFloatReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatReturnCustomExceptionUnexpectedValue($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->getValueAsFloat($return);
     }
 
     /**

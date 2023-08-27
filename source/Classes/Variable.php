@@ -48,8 +48,6 @@ class Variable implements VariableInterface
      * @param string $return
      *
      * @return \Quorrax\Interfaces\Variable
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
      */
     public function getType($return = Variable::class)
     {
@@ -68,8 +66,16 @@ class Variable implements VariableInterface
      * @param string $return
      *
      * @return \Quorrax\Interfaces\Variable
-     * @throws \InvalidArgumentException
-     * @throws \UnexpectedValueException
+     */
+    public function getValueAsFloat($return = Variable::class)
+    {
+        return $this->execute("floatval", $return);
+    }
+
+    /**
+     * @param string $return
+     *
+     * @return \Quorrax\Interfaces\Variable
      */
     public function isBoolean($return = Variable::class)
     {

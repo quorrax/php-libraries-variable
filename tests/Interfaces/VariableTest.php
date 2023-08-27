@@ -132,6 +132,41 @@ interface VariableTest
     /**
      * @return array
      */
+    public function provideGetValueAsFloat();
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatDefaultReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatDefaultReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatDefaultReturnCustomExceptionUnexpectedValue();
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideGetValueAsFloatReturnCustomExceptionUnexpectedValue();
+
+    /**
+     * @return array
+     */
     public function provideIsBooleanDefaultReturnCustom();
 
     /**
@@ -438,6 +473,79 @@ interface VariableTest
      * @return void
      */
     public function testMethodGetValue($value);
+
+    /**
+     * @dataProvider provideGetValueAsFloat
+     *
+     * @param mixed $value
+     * @param float $expected
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloat($value, $expected);
+
+    /**
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefault();
+
+    /**
+     * @dataProvider provideGetValueAsFloatDefaultReturnCustom
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefaultReturnCustom($return);
+
+    /**
+     * @dataProvider provideGetValueAsFloatDefaultReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefaultReturnCustomExceptionInvalidArgument($return);
+
+    /**
+     * @dataProvider provideGetValueAsFloatDefaultReturnCustomExceptionUnexpectedValue
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatDefaultReturnCustomExceptionUnexpectedValue($return);
+
+    /**
+     * @dataProvider provideGetValueAsFloatReturnCustom
+     *
+     * @param mixed $value
+     * @param float $expected
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatReturnCustom($value, $expected, $return);
+
+    /**
+     * @dataProvider provideGetValueAsFloatReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatReturnCustomExceptionInvalidArgument($value, $return);
+
+    /**
+     * @dataProvider provideGetValueAsFloatReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodGetValueAsFloatReturnCustomExceptionUnexpectedValue($value, $return);
 
     /**
      * @return void

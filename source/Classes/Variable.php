@@ -25,7 +25,12 @@ class Variable implements VariableInterface
     {
         if (is_string($return)) {
             if (is_a($return, VariableInterface::class, true)) {
-                return new $return(call_user_func($function, $this->getValue()));
+                switch ($function) {
+                    case "empty":
+                        return new $return(empty($this->getValue()));
+                    default:
+                        return new $return(call_user_func($function, $this->getValue()));
+                }
             } else {
                 throw new UnexpectedValueException();
             }
@@ -90,6 +95,16 @@ class Variable implements VariableInterface
     public function isBoolean($return = Variable::class)
     {
         return $this->execute("is_bool", $return);
+    }
+
+    /**
+     * @param string $return
+     *
+     * @return \Quorrax\Interfaces\Variable
+     */
+    public function isEmpty($return = Variable::class)
+    {
+        return $this->execute("empty", $return);
     }
 
     /**

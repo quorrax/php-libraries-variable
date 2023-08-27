@@ -31,10 +31,30 @@ class VariableTest extends TestCase implements VariableTestInterface
      */
     private function getValuesBoolean()
     {
+        return array_merge(
+            $this->getValuesBooleanEmpty(),
+            $this->getValuesBooleanNotEmpty()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesBooleanEmpty()
+    {
         return [
             [
                 false,
             ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesBooleanNotEmpty()
+    {
+        return [
             [
                 true,
             ],
@@ -46,9 +66,38 @@ class VariableTest extends TestCase implements VariableTestInterface
      */
     private function getValuesFloat()
     {
+        return array_merge(
+            $this->getValuesFloatEmpty(),
+            $this->getValuesFloatNotEmpty()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesFloatEmpty()
+    {
         return [
             [
                 0.0,
+            ],
+            [
+                -0.0,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesFloatNotEmpty()
+    {
+        return [
+            [
+                0.1,
+            ],
+            [
+                -0.1,
             ],
         ];
     }
@@ -58,9 +107,38 @@ class VariableTest extends TestCase implements VariableTestInterface
      */
     private function getValuesInteger()
     {
+        return array_merge(
+            $this->getValuesIntegerEmpty(),
+            $this->getValuesIntegerNotEmpty()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesIntegerEmpty()
+    {
         return [
             [
                 0,
+            ],
+            [
+                -0,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesIntegerNotEmpty()
+    {
+        return [
+            [
+                1,
+            ],
+            [
+                -1,
             ],
         ];
     }
@@ -119,9 +197,41 @@ class VariableTest extends TestCase implements VariableTestInterface
      */
     private function getValuesString()
     {
+        return array_merge(
+            $this->getValuesStringEmpty(),
+            $this->getValuesStringNotEmpty()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesStringEmpty()
+    {
         return [
             [
+                "0",
+            ],
+            [
                 "",
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getValuesStringNotEmpty()
+    {
+        return [
+            [
+                "0.0",
+            ],
+            [
+                "1",
+            ],
+            [
+                "string",
             ],
         ];
     }
@@ -737,6 +847,141 @@ class VariableTest extends TestCase implements VariableTestInterface
         $values = [];
         foreach ($this->provideIsBooleanDefaultReturnCustomExceptionUnexpectedValue() as $return) {
             foreach ($this->provideIsBooleanTrue() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyDefaultReturnCustom()
+    {
+        return $this->getValuesReturn();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyDefaultReturnCustomExceptionInvalidArgument()
+    {
+        return $this->getValuesReturnInvalidMixed();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyDefaultReturnCustomExceptionUnexpectedValue()
+    {
+        return $this->getValuesReturnInvalidString();
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalse()
+    {
+        return array_merge(
+            $this->getValuesBooleanNotEmpty(),
+            $this->getValuesFloatNotEmpty(),
+            $this->getValuesIntegerNotEmpty(),
+            $this->getValuesStringNotEmpty()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalseReturnCustom()
+    {
+        $values = [];
+        foreach ($this->provideIsEmptyDefaultReturnCustom() as $return) {
+            foreach ($this->provideIsEmptyFalse() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalseReturnCustomExceptionInvalidArgument()
+    {
+        $values = [];
+        foreach ($this->provideIsEmptyDefaultReturnCustomExceptionInvalidArgument() as $return) {
+            foreach ($this->provideIsEmptyFalse() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalseReturnCustomExceptionUnexpectedValue()
+    {
+        $values = [];
+        foreach ($this->provideIsEmptyDefaultReturnCustomExceptionUnexpectedValue() as $return) {
+            foreach ($this->provideIsEmptyFalse() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrue()
+    {
+        return array_merge(
+            $this->getValuesBooleanEmpty(),
+            $this->getValuesFloatEmpty(),
+            $this->getValuesIntegerEmpty(),
+            $this->getValuesNull(),
+            $this->getValuesStringEmpty()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrueReturnCustom()
+    {
+        $values = [];
+        foreach ($this->provideIsEmptyDefaultReturnCustom() as $return) {
+            foreach ($this->provideIsEmptyTrue() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrueReturnCustomExceptionInvalidArgument()
+    {
+        $values = [];
+        foreach ($this->provideIsEmptyDefaultReturnCustomExceptionInvalidArgument() as $return) {
+            foreach ($this->provideIsEmptyTrue() as $value) {
+                $values[] = array_merge($value, $return);
+            }
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrueReturnCustomExceptionUnexpectedValue()
+    {
+        $values = [];
+        foreach ($this->provideIsEmptyDefaultReturnCustomExceptionUnexpectedValue() as $return) {
+            foreach ($this->provideIsEmptyTrue() as $value) {
                 $values[] = array_merge($value, $return);
             }
         }
@@ -1638,5 +1883,199 @@ class VariableTest extends TestCase implements VariableTestInterface
         $this->expectExceptionCode(0);
         $this->expectExceptionMessage("");
         $variable->isBoolean($return);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMethodIsEmptyDefault()
+    {
+        $variable = new Variable();
+        $isEmpty = $variable->isEmpty();
+        $this->assertInstanceOf(VariableInterface::class, $isEmpty);
+        $this->assertInstanceOf(Variable::class, $isEmpty);
+        $this->assertSame(true, $isEmpty->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsEmptyDefaultReturnCustom
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyDefaultReturnCustom($return)
+    {
+        $variable = new Variable();
+        $isEmpty = $variable->isEmpty($return);
+        $this->assertInstanceOf(VariableInterface::class, $isEmpty);
+        $this->assertInstanceOf($return, $isEmpty);
+        $this->assertSame(true, $isEmpty->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsEmptyDefaultReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyDefaultReturnCustomExceptionInvalidArgument($return)
+    {
+        $variable = new Variable();
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isEmpty($return);
+    }
+
+    /**
+     * @dataProvider provideIsEmptyDefaultReturnCustomExceptionUnexpectedValue
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyDefaultReturnCustomExceptionUnexpectedValue($return)
+    {
+        $variable = new Variable();
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isEmpty($return);
+    }
+
+    /**
+     * @dataProvider provideIsEmptyFalse
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalse($value)
+    {
+        $variable = new Variable($value);
+        $isEmpty = $variable->isEmpty();
+        $this->assertInstanceOf(VariableInterface::class, $isEmpty);
+        $this->assertInstanceOf(Variable::class, $isEmpty);
+        $this->assertSame(false, $isEmpty->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsEmptyFalseReturnCustom
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalseReturnCustom($value, $return)
+    {
+        $variable = new Variable($value);
+        $isEmpty = $variable->isEmpty($return);
+        $this->assertInstanceOf(VariableInterface::class, $isEmpty);
+        $this->assertInstanceOf($return, $isEmpty);
+        $this->assertSame(false, $isEmpty->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsEmptyFalseReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalseReturnCustomExceptionInvalidArgument($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isEmpty($return);
+    }
+
+    /**
+     * @dataProvider provideIsEmptyFalseReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalseReturnCustomExceptionUnexpectedValue($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isEmpty($return);
+    }
+
+    /**
+     * @dataProvider provideIsEmptyTrue
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrue($value)
+    {
+        $variable = new Variable($value);
+        $isEmpty = $variable->isEmpty();
+        $this->assertInstanceOf(VariableInterface::class, $isEmpty);
+        $this->assertInstanceOf(Variable::class, $isEmpty);
+        $this->assertSame(true, $isEmpty->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsEmptyTrueReturnCustom
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrueReturnCustom($value, $return)
+    {
+        $variable = new Variable($value);
+        $isEmpty = $variable->isEmpty($return);
+        $this->assertInstanceOf(VariableInterface::class, $isEmpty);
+        $this->assertInstanceOf($return, $isEmpty);
+        $this->assertSame(true, $isEmpty->getValue());
+    }
+
+    /**
+     * @dataProvider provideIsEmptyTrueReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrueReturnCustomExceptionInvalidArgument($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isEmpty($return);
+    }
+
+    /**
+     * @dataProvider provideIsEmptyTrueReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrueReturnCustomExceptionUnexpectedValue($value, $return)
+    {
+        $variable = new Variable($value);
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionCode(0);
+        $this->expectExceptionMessage("");
+        $variable->isEmpty($return);
     }
 }

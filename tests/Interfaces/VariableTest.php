@@ -255,6 +255,61 @@ interface VariableTest
     public function provideIsBooleanTrueReturnCustomExceptionUnexpectedValue();
 
     /**
+     * @return array
+     */
+    public function provideIsEmptyDefaultReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyDefaultReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyDefaultReturnCustomExceptionUnexpectedValue();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalse();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalseReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalseReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyFalseReturnCustomExceptionUnexpectedValue();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrue();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrueReturnCustom();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrueReturnCustomExceptionInvalidArgument();
+
+    /**
+     * @return array
+     */
+    public function provideIsEmptyTrueReturnCustomExceptionUnexpectedValue();
+
+    /**
      * @return void
      */
     public function testImplementations();
@@ -769,4 +824,114 @@ interface VariableTest
      * @return void
      */
     public function testMethodIsBooleanTrueReturnCustomExceptionUnexpectedValue($value, $return);
+
+    /**
+     * @return void
+     */
+    public function testMethodIsEmptyDefault();
+
+    /**
+     * @dataProvider provideIsEmptyDefaultReturnCustom
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyDefaultReturnCustom($return);
+
+    /**
+     * @dataProvider provideIsEmptyDefaultReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyDefaultReturnCustomExceptionInvalidArgument($return);
+
+    /**
+     * @dataProvider provideIsEmptyDefaultReturnCustomExceptionUnexpectedValue
+     *
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyDefaultReturnCustomExceptionUnexpectedValue($return);
+
+    /**
+     * @dataProvider provideIsEmptyFalse
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalse($value);
+
+    /**
+     * @dataProvider provideIsEmptyFalseReturnCustom
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalseReturnCustom($value, $return);
+
+    /**
+     * @dataProvider provideIsEmptyFalseReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalseReturnCustomExceptionInvalidArgument($value, $return);
+
+    /**
+     * @dataProvider provideIsEmptyFalseReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyFalseReturnCustomExceptionUnexpectedValue($value, $return);
+
+    /**
+     * @dataProvider provideIsEmptyTrue
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrue($value);
+
+    /**
+     * @dataProvider provideIsEmptyTrueReturnCustom
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrueReturnCustom($value, $return);
+
+    /**
+     * @dataProvider provideIsEmptyTrueReturnCustomExceptionInvalidArgument
+     *
+     * @param mixed $value
+     * @param mixed $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrueReturnCustomExceptionInvalidArgument($value, $return);
+
+    /**
+     * @dataProvider provideIsEmptyTrueReturnCustomExceptionUnexpectedValue
+     *
+     * @param mixed $value
+     * @param string $return
+     *
+     * @return void
+     */
+    public function testMethodIsEmptyTrueReturnCustomExceptionUnexpectedValue($value, $return);
 }
